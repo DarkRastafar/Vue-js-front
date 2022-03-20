@@ -7,16 +7,21 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@ocrv/vue-tailwind-pagination": "0.0.4",
     "core-js": "^3.6.5",
+    "jquery": "^3.6.0",
     "vue": "^3.0.0",
+    "vue-ads-pagination": "^2.1.7",
     "vue-router": "^4.0.0-0",
+    "vue-select": "^3.18.3",
+    "vuejs-paginate-next": "^1.0.2",
     "vuex": "^4.0.0-0"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.13",
+    "@vue/cli-plugin-babel": "^5.0.1",
     "@vue/cli-plugin-router": "~4.5.13",
     "@vue/cli-plugin-vuex": "~4.5.13",
-    "@vue/cli-service": "~4.5.13",
+    "@vue/cli-service": "^5.0.1",
     "@vue/compiler-sfc": "^3.0.0"
   },
   "browserslist": [

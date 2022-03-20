@@ -1,0 +1,223 @@
+table {
+    border: 4px solid black;
+}
+
+.table {
+    margin-top: 30px;
+    width: 50%;
+    height: 50%;
+}
+
+th[name*="id"]{
+    vertical-align:middle;
+    font-size: 120px;
+    color: black;
+}
+
+th[class='id'] {
+    vertical-align:middle;
+}
+
+th[class*="cell"] {
+    background-color: #e7ebdf;
+}
+
+th[class*="empty-field"] {
+    background-color: #e7ebdf;
+    padding: 0;
+}
+th[name*="name_company"], th[name*="surname"], th[name*="first_name"], th[name*='bank_response ']  {
+    width: 150px;
+    height: 50px;
+}
+
+textarea {
+    width: 150px;
+    height: 70px;
+}
+
+textarea[name*="adres"] {
+    width: 394px;
+    height: 80px;
+}
+
+.field__hidden {
+    display: none;
+}
+
+button[class*='send-data'] {
+    margin: 0%;
+    width: 243px;
+    height: 173px;
+    background-color: #4570e6;
+}
+
+.v-table__paginator {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 50px;
+    cursor: pointer;
+}
+
+.page-item {
+    display:inline-block;
+  }
+
+.diapason {
+    width: 90px;
+}
+
+.diapason-button {
+    margin-left: 67px;
+}
+
+#reset-diapason-button {
+    width: 260px;
+    margin-left: 0%;
+    margin-right: 22%;
+}
+
+.range-form {
+    margin-left: 0%;
+    margin-top: 30px;
+    /* position: fixed; */
+}
+
+.form-select {
+    color: black;
+    margin-top: 0%;
+    height: 87px;
+}
+
+.send_rko_checkbox {
+    height: 87px;
+    width: 150px;
+}
+
+input[class*='send_rko_checkbox'] {
+    text-align: center;
+    height: 87px;
+    width: 150px;
+}
+
+.data_non_called_clients {
+    margin-top: 30px;
+}
+
+span[class*='statisticsDataSpan'] {
+    color: black;
+}
+
+li[class='list-group-item d-flex justify-content-between align-items-center']{
+    height: 33px;
+    /* margin-right: 35px; */
+}
+
+.hidden__content {
+    display: none;
+}
+
+/* .send_rko {
+    width: 50px;
+    height: 50px;
+} */
+
+/* tr {
+    width: auto !important;
+}
+
+th {
+    padding: 5px;
+    border: 1px solid white;
+    width: auto !important;
+}
+
+.username_id, .username {
+    display: none;
+}
+
+td[id*="field_"] {
+    display: none;
+} */
+
+
+
+/* td {
+    text-align: left;
+    padding: 5px;
+    border: 1px solid black;
+    width: auto !important;
+}
+
+tbody tr:nth-child(odd) td {
+    background-color: #e7ebdf;/* фон нечетных строк 
+} */
+
+/* tbody tr:nth-child(even) td {
+    background-color:  white;/* фон четных строк
+  }
+
+textarea{
+    width: auto; 
+    height: auto;
+    background-color: transparent;
+}  */
+/* 
+div {
+    width: auto;
+    height: auto;
+    background-color: transparent;
+}
+
+select {
+    width: auto;
+    height: 60px;
+    background-color: transparent;
+}
+
+form{
+    width: auto;
+    height: 60px;
+}
+
+.col{     
+    position: sticky;
+} */
+/* 
+.first_name{
+    left: 190px;
+    z-index: 100;
+}
+
+.surname{
+    left: 0px;
+    z-index: 100;
+}
+
+.patronomic{
+    left: 380px;
+    z-index: 100;
+}
+
+.number, .phone{
+    left: 570px;
+    z-index: 100;
+} */
+
+/* .vs__selected-options {
+    width: 200px;
+    height: 60px;
+    background-color: transparent;
+    z-index: 100;
+}
+
+div#vs1__combobox.vs__dropdown-toggle {
+    width: 450px;
+}
+
+.listbox, .combobox, .search {
+    border: 4px solid red;
+    z-index: 100;
+}*/
+
