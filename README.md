@@ -5,6 +5,11 @@
 npm install
 ```
 
+### Paginate module
+```
+npm install vuejs-paginate-next --save
+```
+
 ### Compiles and hot-reloads for development
 ```
 npm run serve
