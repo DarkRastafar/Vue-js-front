@@ -30,11 +30,15 @@ class ActivateOperator {
 
 class GetData {
     constructor () {
+        this.classModel = this.returnClassModel ()
         this.startingPointParam = this.returnStartingPointParam ()
         this.endingPointParam = this.returnEndingPointParam ()
         this.usernameParam = this.returnUsernameParam ()
-        this.baseUrl = `http://127.0.0.1:8000/api/clients/novoregi/custom_novoregi`
-        this.url = this.baseUrl + this.startingPointParam + this.endingPointParam + this.usernameParam
+        this.classModelParam = this.returnClassModelParam ()
+        
+        this.baseUrl = `http://127.0.0.1:8000/api/clients/${this.classModel}/custom_${this.classModel}`
+        this.url = this.baseUrl + this.startingPointParam + this.endingPointParam + 
+                   this.usernameParam + this.classModelParam
     }
 
     returnStartingPointParam () {
@@ -49,7 +53,33 @@ class GetData {
         return `&username=${localStorage.getItem('username')}`
     }
 
+    returnClassModel () {
+        let classModel = localStorage.getItem('user_class_model')
+        if (!classModel) {
+            classModel = 'novoregi'
+        }
+        return classModel
+    }
+
+    returnClassModelParam () {
+        return `&class_model=${this.classModel}`
+    }
+
+    getPageItemActive () {
+        // let pages = document.getElementsByClassName('page-item active')
+        // for (let page of pages){
+        //     console.log(page.textContent)
+        // }
+        let currentPage = localStorage.getItem('currentPage')
+        if (!currentPage) {
+            currentPage = 1
+        }
+        return currentPage
+    }
+
     returnSlice () {
+        console.log(this.getPageItemActive())
+
         const headers = {
             'Content-Type': 'application/json'
         }

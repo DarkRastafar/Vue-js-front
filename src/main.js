@@ -27,10 +27,25 @@ const store = createStore({
         async getDataDRF(ctx) {
             const GetDataInstance = new GetData()
             let responseData = await GetDataInstance.returnSlice()
-            let paginateData = responseData.data.paginate_data
+            let paginateData = responseData.data.body.paginate_data
+            let responseBody = responseData.data.body.body
+            let responseHeaders = responseData.data.headers
+            let responseAdditionalComments = responseData.data.additional_comments
+            let responseClientsTypeForOperators = responseData.data.clients_type_for_operators
+
             console.log(responseData)
 
+            console.log(responseAdditionalComments)
+            console.log(responseClientsTypeForOperators)
+
             ctx.commit('updatePaginateData', paginateData)
+            ctx.commit('updateFirstTableHeaders', responseHeaders.first)
+            ctx.commit('updateSecondTableHeaders', responseHeaders.second)
+            ctx.commit('updateThirdTableHeaders', responseHeaders.third)
+            ctx.commit('updateTableBody', responseBody)
+            ctx.commit('updateAdditionalComments', responseAdditionalComments)
+            ctx.commit('updateClientsTypeForOperators', responseClientsTypeForOperators)
+            
         },
         async websocketConnect(ctx) {
             let username = new GetUsernameFromCoockies(document.cookie).returnUsername()

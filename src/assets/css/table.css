@@ -4,8 +4,6 @@ table {
 
 .table {
     margin-top: 30px;
-    width: 50%;
-    height: 50%;
 }
 
 th[name*="id"]{
@@ -26,6 +24,7 @@ th[class*="empty-field"] {
     background-color: #e7ebdf;
     padding: 0;
 }
+
 th[name*="name_company"], th[name*="surname"], th[name*="first_name"], th[name*='bank_response ']  {
     width: 150px;
     height: 50px;
@@ -81,7 +80,6 @@ button[class*='send-data'] {
 .range-form {
     margin-left: 0%;
     margin-top: 30px;
-    /* position: fixed; */
 }
 
 .form-select {
@@ -111,17 +109,16 @@ span[class*='statisticsDataSpan'] {
 
 li[class='list-group-item d-flex justify-content-between align-items-center']{
     height: 33px;
-    /* margin-right: 35px; */
 }
 
 .hidden__content {
     display: none;
 }
 
-/* .send_rko {
+.send_rko {
     width: 50px;
     height: 50px;
-} */
+}
 
 /* tr {
     width: auto !important;

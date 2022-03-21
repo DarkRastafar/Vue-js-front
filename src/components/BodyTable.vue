@@ -32,7 +32,7 @@
   <div class="container fluid">
     <div class="row">
       <div class="col-md-8">
-        <table class="table table-sm table-striped" :name="Client.id" v-for="Client in paginatedClients" v-bind:key="Client.id" :id="Client.id">
+        <table class="table table-sm table-striped" :name="Client.id" v-for="Client in tableBody" v-bind:key="Client.id" :id="Client.id">
           <thead class="table-dark">
             <tr>
 
@@ -66,7 +66,7 @@
                 </select>
               </th>
 
-            </tr>
+            </tr> 
             <tr>
 
               <th :class="firstTableHeaders[1].key"><p>{{ firstTableHeaders[1].value }}</p></th>
@@ -125,8 +125,7 @@
             </tr>
 
             <tr>
-              
-              <th><p>{{ secondTableHeaders[5].value }}</p></th>
+              <th :class="secondTableHeaders[5].key"><p>{{ secondTableHeaders[5].value }}</p></th>
               <th colspan="3" class="cell" :name="`adress ${Client.id}`">
                 <textarea :value="Client.adress" name="adress"/>
               </th>
@@ -207,6 +206,7 @@
         clickPage (page) {
           if (page !== '...'){
             this.pageNumber = page;
+            localStorage.setItem('currentPage', page)
           }
 
         },
@@ -214,8 +214,13 @@
           const RangeFilterClientsInstance = new RangeFilterClients(event, this.$store)
           RangeFilterClientsInstance.updateStoreTableBody(this.tableBody)
 
+          let from = (this.pageNumber -1) * this.clientsPerPage;
+          let to = from + this.clientsPerPage;
+          let sliceDiapason = [from, to]
+
           const GetDataInstance = new GetData()
           let data = await GetDataInstance.returnSlice()
+
           let dataForUpdate = data.data.paginate_data
           this.$store.commit('updatePaginateData', dataForUpdate)
         },
