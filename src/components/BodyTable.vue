@@ -118,8 +118,10 @@
                 <textarea :value="Client.patronomic" name="patronomic"/>
               </th>
               <!-- ------------------------------------------------------------------ -->
-              <th colspan="2" rowspan="2" class="cell">
-                <button class="btn btn-primary send-data" type="submit">Отправить</button>
+              <th><p>{{ thirdTableHeaders[0].value }}</p></th>
+              <th class="cell" :name="`patronomic ${Client.id}`">
+                <!-- <textarea :value="Client.phone" name="patronomic"/> -->
+                <a href="tel:+${Client.phone}">{{Client.phone}}</a>
               </th>
               
             </tr>
@@ -130,6 +132,9 @@
                 <textarea :value="Client.adress" name="adress"/>
               </th>
               <!-- ------------------------------------------------------------------ -->
+              <th colspan="2" class="cell">
+                <button class="btn btn-primary send-data" type="submit">Отправить</button>
+              </th>
             </tr>
 
           </thead>
@@ -166,7 +171,7 @@
       data() {
         return {
           clientsPerPage: 2,
-          pageNumber: 1,
+          pageNumber: 1
         }
       },
       components: {
@@ -176,49 +181,48 @@
       },
       computed: {
         ...mapGetters(["firstTableHeaders", "secondTableHeaders", "thirdTableHeaders", 
-        "tableBody", "additionalComments", "clientsTypeForOperators", "statisticsData", "paginateData"]),
+        "tableBody", "additionalComments", "clientsTypeForOperators", "statisticsData", 
+        "paginateData", "clientsPerPageData"]),
 
         howClients () {
           return this.tableBody.length
         },
-
-        // pages () {
-        //   return Math.ceil(this.tableBody.length / this.clientsPerPage)
-        // },
         pages () {
-          return Math.ceil(this.paginateData / this.clientsPerPage)
+          return Math.ceil(this.paginateData / this.clientsPerPageData)
         },
-        paginatedClients () {
-          let from = (this.pageNumber -1) * this.clientsPerPage;
-          let to = from + this.clientsPerPage;
-          return this.tableBody.slice(from, to);
-        },
+        // paginatedClients () {
+        //   let from = (this.pageNumber -1) * this.clientsPerPage;
+        //   let to = from + this.clientsPerPage;
+        //   return this.tableBody.slice(from, to);
+        // },
         modelType () {
             return localStorage.getItem('user_class_model')
         }
       },
-      methods: mapActions(['setVariablesFromLocalStorage', 'websocketConnect', 'getDataDRF']),
+      methods: mapActions(['websocketConnect', 'setVariablesFromLocalStorage', 'getDataDRF']),
       methods: {
         UpdateScrollHeight (event) {
           const currentTextareaField = document.getElementById(event.target.id);
           currentTextareaField.style.cssText = `height: ${currentTextareaField, currentTextareaField.scrollHeight}px; overflow-y: hidden`;
         },
-        clickPage (page) {
+        async clickPage (page) {
           if (page !== '...'){
             this.pageNumber = page;
             localStorage.setItem('currentPage', page)
-          }
 
+            const GetDataInstance = new GetData(this.clientsPerPageData)
+            let data = await GetDataInstance.returnSlice()
+            let paginate_data = data.data.body.paginate_data
+            let body_data = data.data.body.body
+            this.$store.commit('updatePaginateData', paginate_data)
+            this.$store.commit('updateTableBody', body_data)
+          }
         },
         async rangeFilterClients (event) {
           const RangeFilterClientsInstance = new RangeFilterClients(event, this.$store)
           RangeFilterClientsInstance.updateStoreTableBody(this.tableBody)
 
-          let from = (this.pageNumber -1) * this.clientsPerPage;
-          let to = from + this.clientsPerPage;
-          let sliceDiapason = [from, to]
-
-          const GetDataInstance = new GetData()
+          const GetDataInstance = new GetData(this.clientsPerPageData)
           let data = await GetDataInstance.returnSlice()
 
           let dataForUpdate = data.data.paginate_data
@@ -227,8 +231,8 @@
       },
       async mounted() {
         this.$store.dispatch('setVariablesFromLocalStorage');
-        this.$store.dispatch('websocketConnect');
         this.$store.dispatch('getDataDRF');
+        this.$store.dispatch('websocketConnect');
       }
   }
 </script>

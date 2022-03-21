@@ -47,7 +47,7 @@ textarea[name*="adres"] {
 button[class*='send-data'] {
     margin: 0%;
     width: 243px;
-    height: 173px;
+    height: 90px;
     background-color: #4570e6;
 }
 

@@ -29,16 +29,18 @@ class ActivateOperator {
 
 
 class GetData {
-    constructor () {
+    constructor (clientsPerPageData=null) {
+        this.clientsPerPageData = clientsPerPageData
         this.classModel = this.returnClassModel ()
         this.startingPointParam = this.returnStartingPointParam ()
         this.endingPointParam = this.returnEndingPointParam ()
         this.usernameParam = this.returnUsernameParam ()
         this.classModelParam = this.returnClassModelParam ()
+        this.dataForSliceParam = this.returnDataForSliceParam ()
         
-        this.baseUrl = `http://127.0.0.1:8000/api/clients/${this.classModel}/custom_${this.classModel}`
+        this.baseUrl = `http://127.0.0.1:8000/api/clients/${this.classModel}/custom`    
         this.url = this.baseUrl + this.startingPointParam + this.endingPointParam + 
-                   this.usernameParam + this.classModelParam
+                   this.usernameParam + this.classModelParam + this.dataForSliceParam
     }
 
     returnStartingPointParam () {
@@ -66,10 +68,6 @@ class GetData {
     }
 
     getPageItemActive () {
-        // let pages = document.getElementsByClassName('page-item active')
-        // for (let page of pages){
-        //     console.log(page.textContent)
-        // }
         let currentPage = localStorage.getItem('currentPage')
         if (!currentPage) {
             currentPage = 1
@@ -77,9 +75,13 @@ class GetData {
         return currentPage
     }
 
-    returnSlice () {
-        console.log(this.getPageItemActive())
+    returnDataForSliceParam () {
+        let from = (this.getPageItemActive () -1) * this.clientsPerPageData;
+        let to = from + this.clientsPerPageData;
+        return `&data_for_slice=[${from},${to}]`
+    }
 
+    returnSlice () {
         const headers = {
             'Content-Type': 'application/json'
         }
@@ -94,3 +96,12 @@ class GetData {
 
 
 export { ActivateOperator, GetData };
+
+
+
+
+
+// let pages = document.getElementsByClassName('page-item active')
+        // for (let page of pages){
+        //     console.log(page.textContent)
+        // }

@@ -16,6 +16,7 @@ import { GetData } from '@/assets/FetchRequest.js'
 
 
 const defaultClientType = 'novoregi'
+const defaultClientPerPage = 2
 
 
 const store = createStore({
@@ -23,29 +24,6 @@ const store = createStore({
         async setVariablesFromLocalStorage() {
             const SetValuesToRangeFilterInstance = new SetValuesToRangeFilter()
             SetValuesToRangeFilterInstance.set()
-        },
-        async getDataDRF(ctx) {
-            const GetDataInstance = new GetData()
-            let responseData = await GetDataInstance.returnSlice()
-            let paginateData = responseData.data.body.paginate_data
-            let responseBody = responseData.data.body.body
-            let responseHeaders = responseData.data.headers
-            let responseAdditionalComments = responseData.data.additional_comments
-            let responseClientsTypeForOperators = responseData.data.clients_type_for_operators
-
-            console.log(responseData)
-
-            console.log(responseAdditionalComments)
-            console.log(responseClientsTypeForOperators)
-
-            ctx.commit('updatePaginateData', paginateData)
-            ctx.commit('updateFirstTableHeaders', responseHeaders.first)
-            ctx.commit('updateSecondTableHeaders', responseHeaders.second)
-            ctx.commit('updateThirdTableHeaders', responseHeaders.third)
-            ctx.commit('updateTableBody', responseBody)
-            ctx.commit('updateAdditionalComments', responseAdditionalComments)
-            ctx.commit('updateClientsTypeForOperators', responseClientsTypeForOperators)
-            
         },
         async websocketConnect(ctx) {
             let username = new GetUsernameFromCoockies(document.cookie).returnUsername()
@@ -63,12 +41,14 @@ const store = createStore({
 
             this.connection.onmessage = function (event) {
                 let messageCatch = JSON.parse(event.data)
-                
-                if (JSON.parse(messageCatch.message).username_id !== undefined) {
+                let eventName = messageCatch.event
+
+                if (eventName == 'operator_connect') {
                     const operator_id = JSON.parse(messageCatch.message).username_id
 
                     document.cookie = `username_id=${operator_id}; secure`
                     localStorage.setItem('username_id', operator_id)
+                    // localStorage.setItem('clients_per_page', clients_per_page)
 
                     const InstanceSetWorkStatus = new SetWorkStatus(messageCatch)
                     InstanceSetWorkStatus.setStatus()
@@ -78,24 +58,32 @@ const store = createStore({
 
                     const InstanceSetClientsModelButton = new SetClientsModelButton()
                     InstanceSetClientsModelButton.setButtonStatus(class_model)
-                }
-                else if (JSON.parse(messageCatch.message).headers !== undefined) {
-                    const tableHeadersMessage = JSON.parse(messageCatch.message).headers
-                    const tableBodyMessage = JSON.parse(messageCatch.message).body.body
-                    const additionalCommentsMessage = JSON.parse(messageCatch.message).additional_comments
-                    const clientsTypeForOperatorsMessage = JSON.parse(messageCatch.message).clients_type_for_operators
 
-                    ctx.commit('updateFirstTableHeaders', tableHeadersMessage.first)
-                    ctx.commit('updateSecondTableHeaders', tableHeadersMessage.second)
-                    ctx.commit('updateThirdTableHeaders', tableHeadersMessage.third)
-                    ctx.commit('updateTableBody', tableBodyMessage)
-                    ctx.commit('updateAdditionalComments', additionalCommentsMessage)
-                    ctx.commit('updateClientsTypeForOperators', clientsTypeForOperatorsMessage)
+                    
+                    ctx.commit('updateClientsPerPageData', defaultClientPerPage)
                 }
-                else if (JSON.parse(messageCatch.message).statistics !== undefined) {
+                else if (eventName == 'send_non_called_statistics') {
                     const statisticsDataMessage = JSON.parse(messageCatch.message).statistics
                     ctx.commit('updateStatisticsData', statisticsDataMessage)
-                }          
+                }
+                else if (eventName == 'client_mutation') {
+                    let mutationClient = JSON.parse(messageCatch.message).client
+                    let mutationClientID = mutationClient.id
+                    let currentArray = ctx.getters.tableBody
+                    for (let client of currentArray) {
+                        if (client.id == mutationClientID) {
+                            let indexItem = currentArray.findIndex(i => i == client)
+                            ctx.commit('replaceItemIntoArray', [indexItem, mutationClient])
+                        }
+                    }
+                }
+                else if (eventName == 'headers_mutation') {
+                    let responseHeaders = JSON.parse(messageCatch.message)
+                    console.log(responseHeaders)
+                    ctx.commit('updateFirstTableHeaders', responseHeaders.first)
+                    ctx.commit('updateSecondTableHeaders', responseHeaders.second)
+                    ctx.commit('updateThirdTableHeaders', responseHeaders.third)
+                }
             }
             
             this.connection.onopen = function (event) {
@@ -127,7 +115,27 @@ const store = createStore({
                 }
                 location.reload()
             }
-        }
+        },
+        async getDataDRF(ctx) {
+            const GetDataInstance = new GetData(defaultClientPerPage)
+            let responseData = await GetDataInstance.returnSlice()
+            let paginateData = responseData.data.body.paginate_data
+            let responseBody = responseData.data.body.body
+            let responseHeaders = responseData.data.headers
+            let responseAdditionalComments = responseData.data.additional_comments
+            let responseClientsTypeForOperators = responseData.data.clients_type_for_operators
+
+            console.log(responseData)
+            
+            ctx.commit('updateClientsPerPageData', defaultClientPerPage)
+            ctx.commit('updatePaginateData', paginateData)
+            ctx.commit('updateFirstTableHeaders', responseHeaders.first)
+            ctx.commit('updateSecondTableHeaders', responseHeaders.second)
+            ctx.commit('updateThirdTableHeaders', responseHeaders.third)
+            ctx.commit('updateTableBody', responseBody)
+            ctx.commit('updateAdditionalComments', responseAdditionalComments)
+            ctx.commit('updateClientsTypeForOperators', responseClientsTypeForOperators)
+        },
     },
     mutations: {
         updateFirstTableHeaders (state, firstTableHeadersMessage) {
@@ -144,6 +152,9 @@ const store = createStore({
         updateTableBody (state, tableBodyMessage) {
             state.tableBodyArray = tableBodyMessage
         },
+        replaceItemIntoArray (state, listUpdate) {
+            state.tableBodyArray[listUpdate[0]] = listUpdate[1]
+        },
 
         updateAdditionalComments (state, additionalCommentsMessage) {
             state.additionalCommentsArray = additionalCommentsMessage
@@ -158,6 +169,10 @@ const store = createStore({
 
         updatePaginateData (state, paginateDataMessage) {
             state.paginateDataVariable = paginateDataMessage
+        },
+
+        updateClientsPerPageData (state, responseClientsPerPage) {
+            state.clientsPerPage = responseClientsPerPage
         }
         
     },
@@ -169,7 +184,8 @@ const store = createStore({
         additionalCommentsArray: [],
         clientsTypeForOperatorsArray: [],
         statisticsDataArray: [],
-        paginateDataVariable: Number()
+        paginateDataVariable: Number(),
+        clientsPerPage: Number()
     },
     getters: {
         firstTableHeaders(state) {
@@ -198,6 +214,9 @@ const store = createStore({
         paginateData(state) {
             return state.paginateDataVariable
         },
+        clientsPerPageData(state) {
+            return state.clientsPerPage
+        }
 
     },
     modules: {}
@@ -290,3 +309,17 @@ app.mount('#app')
         // updateDropDownCityAlfabank (state, dropDownCityAlfabank) {
         //     state.dropDownCityAlfabank = dropDownCityAlfabank
         // },
+        
+                // else if (JSON.parse(messageCatch.message).headers !== undefined) {
+                //     const tableHeadersMessage = JSON.parse(messageCatch.message).headers
+                //     const tableBodyMessage = JSON.parse(messageCatch.message).body.body
+                //     const additionalCommentsMessage = JSON.parse(messageCatch.message).additional_comments
+                //     const clientsTypeForOperatorsMessage = JSON.parse(messageCatch.message).clients_type_for_operators
+
+                //     ctx.commit('updateFirstTableHeaders', tableHeadersMessage.first)
+                //     ctx.commit('updateSecondTableHeaders', tableHeadersMessage.second)
+                //     ctx.commit('updateThirdTableHeaders', tableHeadersMessage.third)
+                //     ctx.commit('updateTableBody', tableBodyMessage)
+                //     ctx.commit('updateAdditionalComments', additionalCommentsMessage)
+                //     ctx.commit('updateClientsTypeForOperators', clientsTypeForOperatorsMessage)
+                // }
