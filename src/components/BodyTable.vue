@@ -121,7 +121,7 @@
               <th><p>{{ thirdTableHeaders[0].value }}</p></th>
               <th class="cell" :name="`phone ${Client.id}`">
                 <!-- <textarea :value="Client.phone" name="patronomic"/> -->
-                <a href="tel:+${Client.phone}" :id="`phone ${Client.id}`">{{Client.phone}}</a>
+                <a :href="`tel:${returnStrippedPhone(Client.phone)}`" :id="`phone ${Client.id}`">{{returnStrippedPhone(Client.phone)}}</a>
               </th>
               
             </tr>
@@ -236,6 +236,9 @@
 
           const FetchStatisticsInstance = new FetchStatistics(event)
           FetchStatisticsInstance.send()
+        },
+        returnStrippedPhone(phone_str) {
+          return phone_str.replace('=', '')
         }
       },
       async mounted() {
