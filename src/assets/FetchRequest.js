@@ -3,9 +3,9 @@ import { GetUsernameFromCoockies, GetUsernameIDFromCoockies } from '@/assets/get
 
 class ActivateOperator {
     constructor (event) {
-        this.usernameId = new GetUsernameIDFromCoockies(document.cookie).findUsernameIDString()
+        this.usernameId = localStorage.getItem('username_id')
         this.url = `http://127.0.0.1:8000/api/operator_user/${this.usernameId}/`
-        this.username = new GetUsernameFromCoockies(document.cookie).findUsernameString()
+        this.username = localStorage.getItem('username')
         this.body = {
             'id': this.usernameId,
             'username': this.username,
