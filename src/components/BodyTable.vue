@@ -37,30 +37,30 @@
             <tr>
 
               <th rowspan="2" :class="firstTableHeaders[0].key"><p>{{ firstTableHeaders[0].value }}</p></th>
-              <th class="cell" rowspan="2" :name="`id ${Client.id}`">
+              <th class="cell" rowspan="2" :name="`id ${Client.id}`" :id="`id ${Client.id}`">
                 {{ Client.id }}
               </th>
               <!-- ------------------------------------------------------------------ -->
               <th><p>{{ secondTableHeaders[0].value }}</p></th>
               <th class="cell" :name="`inn ${Client.id}`">
-                <textarea :value="Client.inn" name="inn"/>
+                <textarea :value="Client.inn" name="inn" :id="`inn ${Client.id}`"/>
               </th>
               <!-- ------------------------------------------------------------------ -->
-              <th><p>{{ thirdTableHeaders[0].value }}</p></th>
+              <th><p>{{ thirdTableHeaders[1].value }}</p></th>
               <th class="cell" :name="`comment ${Client.id}`">
-                <textarea :value="Client.comment" name="comment"/>
+                <textarea :value="Client.comment" name="comment" :id="`comment ${Client.id}`"/>
               </th>
 
             </tr>
             <tr>
               <th><p>{{ secondTableHeaders[1].value }}</p></th>
               <th class="cell" :name="`name_company ${Client.id}`">
-                <textarea :value="Client.name_company" name="name_company"/>
+                <textarea :value="Client.name_company" name="name_company" :id="`name_company ${Client.id}`"/>
               </th>
               <!-- ------------------------------------------------------------------ -->
-              <th><p>{{ thirdTableHeaders[1].value }}</p></th>
+              <th><p>{{ thirdTableHeaders[2].value }}</p></th>
               <th class="cell" :name="`additional_comment ${Client.id}`">
-                <select class="form-select">
+                <select class="form-select" :id="`additional_comment ${Client.id}`">
                   <option>Доп. коммент</option>
                   <option v-for="comment in additionalComments" v-bind:key="comment.id">{{comment.list}}</option>
                 </select>
@@ -71,17 +71,17 @@
 
               <th :class="firstTableHeaders[1].key"><p>{{ firstTableHeaders[1].value }}</p></th>
               <th class="cell" :name="`status_inn ${Client.id}`">
-                <textarea :value="Client.status_inn" name="status_inn"/>
+                <textarea :value="Client.status_inn" name="status_inn" :id="`status_inn ${Client.id}`"/>
               </th>
               <!-- ------------------------------------------------------------------ -->
               <th><p>{{ secondTableHeaders[2].value }}</p></th>
               <th class="cell" :name="`surname ${Client.id}`">
-                <textarea :value="Client.surname" name="surname"/>
+                <textarea :value="Client.surname" name="surname" :id="`surname ${Client.id}`"/>
               </th>
               <!-- ------------------------------------------------------------------ -->
-              <th><p>{{ thirdTableHeaders[2].value }}</p></th>
+              <th><p>{{ thirdTableHeaders[3].value }}</p></th>
               <th class="cell" :name="`send_rko ${Client.id}`">
-                <input type="checkbox" class="btn-check send_rko_checkbox" id="btn-check-outlined send_rko_checkbox" autocomplete="off">
+                <input type="checkbox" class="btn-check send_rko_checkbox" :id="`btn-check-outlined send_rko_checkbox ${Client.id}`" autocomplete="off">
                 <label class="btn btn-outline-primary send_rko_checkbox" for="btn-check-outlined send_rko_checkbox">Отправить</label><br>
               </th>
 
@@ -91,16 +91,16 @@
 
               <th :class="firstTableHeaders[3].key"><p>{{ firstTableHeaders[3].value }}</p></th>
               <th class="cell" :name="`bank_city ${Client.id}`">
-                <textarea :value="Client.bank_city" name="bank_city"/>
+                <textarea :value="Client.bank_city" name="bank_city" :id="`bank_city ${Client.id}`"/>
               </th>
               <th><p>{{ secondTableHeaders[3].value }}</p></th>
               <th class="cell" :name="`first_name ${Client.id}`">
-                <textarea :value="Client.first_name" name="first_name"/>
+                <textarea :value="Client.first_name" name="first_name" :id="`first_name ${Client.id}`"/>
               </th>
               <!-- ------------------------------------------------------------------ -->
-              <th><p>{{ thirdTableHeaders[3].value }}</p></th>
+              <th><p>{{ thirdTableHeaders[4].value }}</p></th>
               <th class="cell" :name="`client_type ${Client.id}`">
-                <select class="form-select">
+                <select class="form-select" :id="`client_type ${Client.id}`">
                   <option>Тип клиента</option>
                   <option v-for="clientType in clientsTypeForOperators" v-bind:key="clientType.key" :id="clientType.key">{{clientType.value}}</option>
                 </select>
@@ -111,17 +111,17 @@
             <tr>
               <th :class="firstTableHeaders[2].key"><p>{{ firstTableHeaders[2].value }}</p></th>
               <th class="cell" :name="`bank_response ${Client.id}`">
-                <textarea :value="Client.bank_response" name="bank_response"/>
+                <textarea :value="Client.bank_response" name="bank_response" :id="`bank_response ${Client.id}`"/>
               </th>
               <th><p>{{ secondTableHeaders[4].value }}</p></th>
               <th class="cell" :name="`patronomic ${Client.id}`">
-                <textarea :value="Client.patronomic" name="patronomic"/>
+                <textarea :value="Client.patronomic" name="patronomic" :id="`patronomic ${Client.id}`"/>
               </th>
               <!-- ------------------------------------------------------------------ -->
               <th><p>{{ thirdTableHeaders[0].value }}</p></th>
-              <th class="cell" :name="`patronomic ${Client.id}`">
+              <th class="cell" :name="`phone ${Client.id}`">
                 <!-- <textarea :value="Client.phone" name="patronomic"/> -->
-                <a href="tel:+${Client.phone}">{{Client.phone}}</a>
+                <a href="tel:+${Client.phone}" :id="`phone ${Client.id}`">{{Client.phone}}</a>
               </th>
               
             </tr>
@@ -129,11 +129,11 @@
             <tr>
               <th :class="secondTableHeaders[5].key"><p>{{ secondTableHeaders[5].value }}</p></th>
               <th colspan="3" class="cell" :name="`adress ${Client.id}`">
-                <textarea :value="Client.adress" name="adress"/>
+                <textarea :value="Client.adress" name="adress" :id="`adress ${Client.id}`"/>
               </th>
               <!-- ------------------------------------------------------------------ -->
               <th colspan="2" class="cell">
-                <button class="btn btn-primary send-data" type="submit">Отправить</button>
+                <button class="btn btn-primary send-data" :id="`sendButton ${Client.id}`" type="submit" @click="SendOnStatistic">Отправить в реестр</button>
               </th>
             </tr>
 
@@ -165,6 +165,8 @@
   import Paginate from "vuejs-paginate-next";
   import RangeFilterClients from '@/assets/rangeFilterDiapason.js'
   import { GetData } from '@/assets/FetchRequest.js'
+  import { BodyStore, PaginatonStore } from '@/assets/updateStore.js'
+  import { FetchClient, FetchStatistics } from '@/assets/sendEntryesOnServer.js'
 
   export default {
       name: 'bodyTable',
@@ -190,11 +192,6 @@
         pages () {
           return Math.ceil(this.paginateData / this.clientsPerPageData)
         },
-        // paginatedClients () {
-        //   let from = (this.pageNumber -1) * this.clientsPerPage;
-        //   let to = from + this.clientsPerPage;
-        //   return this.tableBody.slice(from, to);
-        // },
         modelType () {
             return localStorage.getItem('user_class_model')
         }
@@ -212,10 +209,12 @@
 
             const GetDataInstance = new GetData(this.clientsPerPageData)
             let data = await GetDataInstance.returnSlice()
-            let paginate_data = data.data.body.paginate_data
-            let body_data = data.data.body.body
-            this.$store.commit('updatePaginateData', paginate_data)
-            this.$store.commit('updateTableBody', body_data)
+
+            const BodyStoreInstance = new BodyStore(this.$store, data)
+            BodyStoreInstance.update()
+
+            const PaginatonStoreInstance = new PaginatonStore(this.$store, data)
+            PaginatonStoreInstance.update()
           }
         },
         async rangeFilterClients (event) {
@@ -225,9 +224,19 @@
           const GetDataInstance = new GetData(this.clientsPerPageData)
           let data = await GetDataInstance.returnSlice()
 
-          let dataForUpdate = data.data.paginate_data
-          this.$store.commit('updatePaginateData', dataForUpdate)
+          const BodyStoreInstance = new BodyStore(this.$store, data)
+          BodyStoreInstance.update()
+
+          const PaginatonStoreInstance = new PaginatonStore(this.$store, data)
+          PaginatonStoreInstance.update()
         },
+        SendOnStatistic (event) {
+          const FetchClientInstance = new FetchClient(event)
+          FetchClientInstance.send()
+
+          const FetchStatisticsInstance = new FetchStatistics(event)
+          FetchStatisticsInstance.send()
+        }
       },
       async mounted() {
         this.$store.dispatch('setVariablesFromLocalStorage');
@@ -392,3 +401,8 @@
       </table> -->
     <!-- </div> -->
   <!-- </div> -->
+  // paginatedClients () {
+        //   let from = (this.pageNumber -1) * this.clientsPerPage;
+        //   let to = from + this.clientsPerPage;
+        //   return this.tableBody.slice(from, to);
+        // },

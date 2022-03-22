@@ -1,5 +1,3 @@
-import { GetUsernameFromCoockies, GetUsernameIDFromCoockies } from '@/assets/get_username_from_cookies.js'
-
 
 class ActivateOperator {
     constructor (event) {

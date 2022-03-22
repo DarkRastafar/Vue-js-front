@@ -125,7 +125,7 @@ const store = createStore({
             let responseAdditionalComments = responseData.data.additional_comments
             let responseClientsTypeForOperators = responseData.data.clients_type_for_operators
 
-            console.log(responseData)
+            // console.log(responseData)
             
             ctx.commit('updateClientsPerPageData', defaultClientPerPage)
             ctx.commit('updatePaginateData', paginateData)
