@@ -81,8 +81,12 @@
               <!-- ------------------------------------------------------------------ -->
               <th><p>{{ thirdTableHeaders[3].value }}</p></th>
               <th class="cell" :name="`send_rko ${Client.id}`">
-                <input type="checkbox" class="btn-check send_rko_checkbox" :id="`btn-check-outlined send_rko_checkbox ${Client.id}`" autocomplete="off">
-                <label class="btn btn-outline-primary send_rko_checkbox" for="btn-check-outlined send_rko_checkbox">Отправить</label><br>
+                <!-- <div class="form-check"> -->
+                <input class="form-check-input" type="checkbox" value="" :id="`send_rko_checkbox ${Client.id}`">
+                <label class="form-check-label" :for="`send_rko_checkbox ${Client.id}`">Отправить</label>
+                <!-- </div> -->
+                <!-- <input type="checkbox" class="btn-check send_rko_checkbox" :id="`btn-check-outlined send_rko_checkbox ${Client.id}`" autocomplete="off">
+                <label class="btn btn-outline-primary send_rko_checkbox" for="btn-check-outlined send_rko_checkbox">Отправить</label><br> -->
               </th>
 
             </tr>

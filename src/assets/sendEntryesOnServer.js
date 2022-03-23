@@ -32,12 +32,12 @@ class Statistic {
 
     getPhoneValue () {
         let phone = document.getElementById(`phone ${this.id}`)
-        console.log(phone.text)
-        return phone.text
+        return phone.value
     }
 
     getCheckSendRko () {
-        let sendRko = document.getElementById(`btn-check-outlined send_rko_checkbox ${this.id}`)
+        let sendRko = document.getElementById(`send_rko_checkbox ${this.id}`)
+        console.log(sendRko.checked)
         return sendRko.checked
     }
 

@@ -12,6 +12,10 @@ th[name*="id"]{
     color: black;
 }
 
+th[name*="send_rko"]{
+    vertical-align:middle;
+}
+
 th[class='id'] {
     vertical-align:middle;
 }
@@ -118,6 +122,11 @@ li[class='list-group-item d-flex justify-content-between align-items-center']{
 .send_rko {
     width: 50px;
     height: 50px;
+}
+
+label[class="form-check-label"] {
+    color: black;
+    margin-left: 10px;
 }
 
 /* tr {
