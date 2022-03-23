@@ -10,7 +10,7 @@
           <div class="data_non_called_clients">
             <ul class="list-group">
               <li class="list-group-item d-flex justify-content-between align-items-center">Альфабанк:
-                <span class="badge badge-primary badge-pill statisticsDataSpan">{{ statisticsData.alfa_data_json }}</span>
+                <span class="badge badge-primary badge-pill statisticsDataSpan">{{ statisticsData.alfabank_data_json }}</span>
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-center">ВтБ:
                 <span class="badge badge-primary badge-pill statisticsDataSpan">{{ statisticsData.vtb_data_json }}</span>

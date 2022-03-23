@@ -64,6 +64,7 @@ const store = createStore({
                 }
                 else if (eventName == 'send_non_called_statistics') {
                     const statisticsDataMessage = JSON.parse(messageCatch.message).statistics
+                    console.log(statisticsDataMessage)
                     ctx.commit('updateStatisticsData', statisticsDataMessage)
                 }
                 else if (eventName == 'client_mutation') {
