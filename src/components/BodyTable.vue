@@ -71,7 +71,7 @@
 
               <th :class="firstTableHeaders[1].key"><p>{{ firstTableHeaders[1].value }}</p></th>
               <th class="cell" :name="`status_inn ${Client.id}`">
-                <textarea :value="Client.status_inn" name="status_inn" :id="`status_inn ${Client.id}`"/>
+                <textarea :value="Client.status_inn" name="status_inn" :id="`status_inn ${Client.id}`" readonly="readonly"/>
               </th>
               <!-- ------------------------------------------------------------------ -->
               <th><p>{{ secondTableHeaders[2].value }}</p></th>
@@ -89,7 +89,7 @@
 
             <tr>
 
-              <th :class="firstTableHeaders[3].key"><p>{{ firstTableHeaders[3].value }}</p></th>
+              <th :class="firstTableHeaders[2].key"><p>{{ firstTableHeaders[2].value }}</p></th>
               <th class="cell" :name="`bank_city ${Client.id}`">
                 <textarea :value="Client.bank_city" name="bank_city" :id="`bank_city ${Client.id}`"/>
               </th>
@@ -109,9 +109,9 @@
             </tr>
 
             <tr>
-              <th :class="firstTableHeaders[2].key"><p>{{ firstTableHeaders[2].value }}</p></th>
+              <th :class="firstTableHeaders[3].key"><p>{{ firstTableHeaders[3].value }}</p></th>
               <th class="cell" :name="`bank_response ${Client.id}`">
-                <textarea :value="Client.bank_response" name="bank_response" :id="`bank_response ${Client.id}`"/>
+                <textarea :value="Client.bank_response" name="bank_response" :id="`bank_response ${Client.id}`" readonly="readonly"/>
               </th>
               <th><p>{{ secondTableHeaders[4].value }}</p></th>
               <th class="cell" :name="`patronomic ${Client.id}`">
