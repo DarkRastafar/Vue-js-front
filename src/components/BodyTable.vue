@@ -121,7 +121,8 @@
               <th><p>{{ thirdTableHeaders[0].value }}</p></th>
               <th class="cell" :name="`phone ${Client.id}`">
                 <!-- <textarea :value="Client.phone" name="patronomic"/> -->
-                <a :href="`tel:${returnStrippedPhone(Client.phone)}`" :id="`phone ${Client.id}`">{{returnStrippedPhone(Client.phone)}}</a>
+                <textarea :value="returnStrippedPhone(Client.phone)" name="patronomic" :id="`phone ${Client.id}`"/>
+                <!-- <a :href="`tel:${returnStrippedPhone(Client.phone)}`" :id="`phone ${Client.id}`">{{returnStrippedPhone(Client.phone)}}</a> -->
               </th>
               
             </tr>
