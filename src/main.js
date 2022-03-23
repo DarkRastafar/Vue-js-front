@@ -48,7 +48,6 @@ const store = createStore({
 
                     document.cookie = `username_id=${operator_id}; secure`
                     localStorage.setItem('username_id', operator_id)
-                    // localStorage.setItem('clients_per_page', clients_per_page)
 
                     const InstanceSetWorkStatus = new SetWorkStatus(messageCatch)
                     InstanceSetWorkStatus.setStatus()
@@ -64,7 +63,6 @@ const store = createStore({
                 }
                 else if (eventName == 'send_non_called_statistics') {
                     const statisticsDataMessage = JSON.parse(messageCatch.message).statistics
-                    console.log(statisticsDataMessage)
                     ctx.commit('updateStatisticsData', statisticsDataMessage)
                 }
                 else if (eventName == 'client_mutation') {
@@ -80,10 +78,27 @@ const store = createStore({
                 }
                 else if (eventName == 'headers_mutation') {
                     let responseHeaders = JSON.parse(messageCatch.message)
-                    console.log(responseHeaders)
                     ctx.commit('updateFirstTableHeaders', responseHeaders.first)
                     ctx.commit('updateSecondTableHeaders', responseHeaders.second)
                     ctx.commit('updateThirdTableHeaders', responseHeaders.third)
+
+                    function callback (data) {
+                        data.then(responseData => {
+                            let paginateData = responseData.data.body.paginate_data
+                            let responseBody = responseData.data.body.body
+                            let responseAdditionalComments = responseData.data.additional_comments
+                            let responseClientsTypeForOperators = responseData.data.clients_type_for_operators
+                            
+                            ctx.commit('updateClientsPerPageData', defaultClientPerPage)
+                            ctx.commit('updatePaginateData', paginateData)
+                            ctx.commit('updateTableBody', responseBody)
+                            ctx.commit('updateAdditionalComments', responseAdditionalComments)
+                            ctx.commit('updateClientsTypeForOperators', responseClientsTypeForOperators)
+                        })
+                        
+                    }
+                    const GetDataInstance = new GetData(defaultClientPerPage)
+                    callback(GetDataInstance.returnSlice())
                 }
             }
             
@@ -125,8 +140,6 @@ const store = createStore({
             let responseHeaders = responseData.data.headers
             let responseAdditionalComments = responseData.data.additional_comments
             let responseClientsTypeForOperators = responseData.data.clients_type_for_operators
-
-            // console.log(responseData)
             
             ctx.commit('updateClientsPerPageData', defaultClientPerPage)
             ctx.commit('updatePaginateData', paginateData)
