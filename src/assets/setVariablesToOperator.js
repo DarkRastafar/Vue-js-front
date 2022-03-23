@@ -1,13 +1,9 @@
-// import { GetUsernameFromCoockies } from '@/assets/get_username_from_cookies.js'
-
-
 class SetBankToOperator {
     constructor (event) {
         this.headers = {'Content-Type': 'application/json'}
         this.checked = event.target.checked
         this.id = event.target.id
         this.url = `http://127.0.0.1:8000/api/operator_user/define_bank/`
-        // this.username = new GetUsernameFromCoockies(document.cookie).findUsernameString()
         this.username = localStorage.getItem('username')
         this.body = {
             'username': this.username,

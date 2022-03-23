@@ -82,12 +82,8 @@
               <!-- ------------------------------------------------------------------ -->
               <th><p>{{ thirdTableHeaders[3].value }}</p></th>
               <th class="cell" :name="`send_rko ${Client.id}`">
-                <!-- <div class="form-check"> -->
                 <input class="form-check-input" type="checkbox" value="" :id="`send_rko_checkbox ${Client.id}`">
                 <label class="form-check-label" :for="`send_rko_checkbox ${Client.id}`">Отправить</label>
-                <!-- </div> -->
-                <!-- <input type="checkbox" class="btn-check send_rko_checkbox" :id="`btn-check-outlined send_rko_checkbox ${Client.id}`" autocomplete="off">
-                <label class="btn btn-outline-primary send_rko_checkbox" for="btn-check-outlined send_rko_checkbox">Отправить</label><br> -->
               </th>
 
             </tr>
@@ -126,8 +122,8 @@
               <th><p>{{ thirdTableHeaders[0].value }}</p></th>
               <th class="cell" :name="`phone ${Client.id}`">
                 <!-- <textarea :value="Client.phone" name="patronomic"/> -->
-                <textarea :value="returnStrippedPhone(Client.phone)" name="patronomic" :id="`phone ${Client.id}`"/>
-                <!-- <a :href="`tel:${returnStrippedPhone(Client.phone)}`" :id="`phone ${Client.id}`">{{returnStrippedPhone(Client.phone)}}</a> -->
+                <!-- <textarea :value="returnStrippedPhone(Client.phone)" name="patronomic" :id="`phone ${Client.id}`"/> -->
+                <a :href="`tel:${returnStrippedPhone(Client.phone)}`" :id="`phone ${Client.id}`">{{returnStrippedPhone(Client.phone)}}</a>
               </th>
               
             </tr>

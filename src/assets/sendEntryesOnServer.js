@@ -57,6 +57,7 @@ class FetchStatistics {
     createBody () {
         const StatisticInstance = new Statistic(this.event)
         let body =  {
+            id: StatisticInstance.returnRefactorId(),
             username: StatisticInstance.getUsername(),
             inn: StatisticInstance.getFieldValue('inn'),
             class_model: StatisticInstance.getClassModel(),
@@ -92,6 +93,7 @@ class FetchClient {
     createBody () {
         const StatisticInstance = new Statistic(this.event)
         let body =  {
+            id: StatisticInstance.returnRefactorId(),
             username: StatisticInstance.getUsername(),
             inn: StatisticInstance.getFieldValue('inn'),
             name_company: StatisticInstance.getFieldValue('name_company'),
