@@ -37,7 +37,6 @@ class Statistic {
 
     getCheckSendRko () {
         let sendRko = document.getElementById(`send_rko_checkbox ${this.id}`)
-        console.log(sendRko.checked)
         return sendRko.checked
     }
 
@@ -69,7 +68,6 @@ class FetchStatistics {
     }
 
     send () {
-        console.log(this.body)
         const headers = {
             'Content-Type': 'application/json'
         }
@@ -118,7 +116,6 @@ class FetchClient {
     }
 
     send () {
-        console.log(this.body)
         const headers = {
             'Content-Type': 'application/json'
         }

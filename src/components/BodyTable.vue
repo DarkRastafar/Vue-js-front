@@ -1,6 +1,7 @@
 <template>
   <bankes/>
   <div class="container fluid customData">
+    <vNotification :messages="messages"/>
     <div class="row">
       <div class="col-12 col-md-6">
         <rangeFilter @rangeFilterClients="rangeFilterClients"/>
@@ -166,6 +167,7 @@
 <script>
   import bankes from '@/components/bankes.vue'
   import rangeFilter from '@/components/rangeFilter.vue'
+  import vNotification from '@/components/v-notification.vue'
   import { mapGetters, mapActions } from 'vuex'
   import Paginate from "vuejs-paginate-next";
   import RangeFilterClients from '@/assets/rangeFilterDiapason.js'
@@ -178,13 +180,15 @@
       data() {
         return {
           clientsPerPage: 2,
-          pageNumber: 1
+          pageNumber: 1,
+          messages: []
         }
       },
       components: {
         bankes,
         Paginate,
         rangeFilter,
+        vNotification
       },
       computed: {
         ...mapGetters(["firstTableHeaders", "secondTableHeaders", "thirdTableHeaders", 
@@ -241,6 +245,9 @@
 
           const FetchStatisticsInstance = new FetchStatistics(event)
           FetchStatisticsInstance.send()
+
+          let clientId = (event.target.id).replace('sendButton', '')
+          this.messages.unshift({name: `Клиент с ${clientId} ID - успешно сохранен`, id: clientId})
         },
         returnStrippedPhone(phone_str) {
           return phone_str.replace('=', '')
