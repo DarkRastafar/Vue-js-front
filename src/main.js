@@ -95,7 +95,6 @@ const store = createStore({
                             ctx.commit('updateAdditionalComments', responseAdditionalComments)
                             ctx.commit('updateClientsTypeForOperators', responseClientsTypeForOperators)
                         })
-                        
                     }
                     const GetDataInstance = new GetData(defaultClientPerPage)
                     callback(GetDataInstance.returnSlice())
