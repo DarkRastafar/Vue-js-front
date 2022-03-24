@@ -239,21 +239,19 @@
           RangeFilterClientsInstance.updateStoreTableBody(this.tableBody)
         },
         SendOnStatistic (event) {
-          // function callback (data) {
-          //     data.then(responseData => {
-          //       let clientId = (event.target.id).replace('sendButton', '')
-          //       this.messages.unshift({name: `Клиент с ${clientId} ID - успешно сохранен`, id: clientId})
-          //     })
-          // }
+          let vm = this;
+          function callback (data) {
+              data.then(responseData => {
+                let clientId = (event.target.id).replace('sendButton', '')
+                vm.messages.unshift({name: `Клиент с ${clientId} ID - успешно сохранен`, id: clientId})
+              })
+          }
 
           const FetchClientInstance = new FetchClient(event)
           FetchClientInstance.send()
 
           const FetchStatisticsInstance = new FetchStatistics(event)
-          FetchStatisticsInstance.send()
-
-          let clientId = (event.target.id).replace('sendButton', '')
-          this.messages.unshift({name: `Клиент с ${clientId} ID - успешно сохранен`, id: clientId})
+          callback(FetchStatisticsInstance.send())
         },
         returnStrippedPhone(phone_str) {
           return phone_str.replace('=', '')

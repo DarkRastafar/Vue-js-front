@@ -32,7 +32,8 @@ class Statistic {
 
     getPhoneValue () {
         let phone = document.getElementById(`phone ${this.id}`)
-        return phone.value
+        console.log(phone.text)
+        return phone.text
     }
 
     getCheckSendRko () {
