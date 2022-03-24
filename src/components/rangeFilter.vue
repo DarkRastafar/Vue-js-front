@@ -29,22 +29,38 @@
 <script>
 export default {
   name: 'RangeFilter',
-  emits: ['rangeFilterClients'],
+  emits: ['rangeFilterClients', 'resetFilter'],
   data() {
     return {
     }
   },
   methods: {
       filterClients(event) {
-        localStorage.setItem('gte', document.getElementById('start-diapason').value)
-        localStorage.setItem('lte', document.getElementById('end-diapason').value)
+        console.log(event.target.id)
+        let buttonId = event.target.id
+
+        if (buttonId.includes('start')) {
+            localStorage.setItem('gte', document.getElementById('start-diapason').value)
+            localStorage.setItem('lte', 0)
+
+            document.getElementById('end-diapason').value = localStorage.getItem('lte')
+        }
+        else if (buttonId.includes('end')) {
+            localStorage.setItem('gte', 0)
+            localStorage.setItem('lte', document.getElementById('end-diapason').value)
+
+            document.getElementById('start-diapason').value = localStorage.getItem('gte')
+        }
 
         this.$emit('rangeFilterClients', event)
       },
-      resetFilter() {
-        this.$store.dispatch('websocketConnect');
+      resetFilter(event) {
         document.getElementById('start-diapason').value = 0
         document.getElementById('end-diapason').value = 0
+        localStorage.setItem('gte', document.getElementById('start-diapason').value)
+        localStorage.setItem('lte', document.getElementById('end-diapason').value)
+
+        this.$emit('resetFilter', event)
       }
   }
 }

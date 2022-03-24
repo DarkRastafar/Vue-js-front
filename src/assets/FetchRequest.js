@@ -30,27 +30,28 @@ class GetData {
     constructor (clientsPerPageData=null) {
         this.clientsPerPageData = clientsPerPageData
         this.classModel = this.returnClassModel ()
-        this.startingPointParam = this.returnStartingPointParam ()
-        this.endingPointParam = this.returnEndingPointParam ()
         this.usernameParam = this.returnUsernameParam ()
         this.classModelParam = this.returnClassModelParam ()
         this.dataForSliceParam = this.returnDataForSliceParam ()
-        
-        this.baseUrl = `http://127.0.0.1:8000/api/clients/${this.classModel}/custom`    
-        this.url = this.baseUrl + this.startingPointParam + this.endingPointParam + 
-                   this.usernameParam + this.classModelParam + this.dataForSliceParam
+        this.baseUrl = `http://127.0.0.1:8000/api/clients/${this.classModel}/custom`
+
+        // this.startingPointParam = this.returnStartingPointParam ()
+        // this.endingPointParam = this.returnEndingPointParam ()
+        // this.url = this.baseUrl + this.startingPointParam + this.endingPointParam + 
+        //            this.usernameParam + this.classModelParam + this.dataForSliceParam
+        // this.url = this.baseUrl + this.usernameParam + this.classModelParam + this.dataForSliceParam
     }
 
-    returnStartingPointParam () {
-        return `?starting_point=${localStorage.getItem('gte')}`
-    }
+    // returnStartingPointParam () {
+    //     return `?starting_point=${localStorage.getItem('gte')}`
+    // }
 
-    returnEndingPointParam () {
-        return `&ending_point=${localStorage.getItem('lte')}`
-    }
+    // returnEndingPointParam () {
+    //     return `&ending_point=${localStorage.getItem('lte')}`
+    // }
 
     returnUsernameParam () {
-        return `&username=${localStorage.getItem('username')}`
+        return `?username=${localStorage.getItem('username')}`
     }
 
     returnClassModel () {
@@ -79,11 +80,19 @@ class GetData {
         return `&data_for_slice=[${from},${to}]`
     }
 
+    returnReverseParam () {
+        return `&reverse=${localStorage.getItem('reverse')}`
+    }
+
+    returnUrl () {
+        return this.baseUrl + this.usernameParam + this.classModelParam + this.dataForSliceParam + this.returnReverseParam()
+    }
+
     returnSlice () {
         const headers = {
             'Content-Type': 'application/json'
         }
-        return fetch(this.url, {
+        return fetch(this.returnUrl(), {
             method: 'GET',
             headers: headers
         }).then(response => {
@@ -93,7 +102,39 @@ class GetData {
 }
 
 
-export { ActivateOperator, GetData };
+class GetDataGte extends GetData {
+    constructor (clientsPerPageData) {
+        super(clientsPerPageData);
+    }
+
+    returnStartingPointParam () {
+        return `&starting_point=${localStorage.getItem('gte')}`
+    }
+
+    returnUrl () {
+        let baseUrl = this.baseUrl + this.usernameParam + this.classModelParam + this.dataForSliceParam + this.returnReverseParam()
+        return baseUrl + this.returnStartingPointParam ()
+    }
+}
+
+
+class GetDataLte  extends GetData {
+    constructor (clientsPerPageData) {
+        super(clientsPerPageData);
+    }
+
+    returnEndingPointParam () {
+        return `&ending_point=${localStorage.getItem('lte')}`
+    }
+
+    returnUrl () {
+        let baseUrl = this.baseUrl + this.usernameParam + this.classModelParam + this.dataForSliceParam + this.returnReverseParam()
+        return baseUrl + this.returnEndingPointParam ()
+    }
+}
+
+
+export { ActivateOperator, GetData, GetDataGte, GetDataLte };
 
 
 

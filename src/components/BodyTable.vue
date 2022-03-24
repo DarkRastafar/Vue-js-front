@@ -4,7 +4,7 @@
     <vNotification :messages="messages"/>
     <div class="row">
       <div class="col-12 col-md-6">
-        <rangeFilter @rangeFilterClients="rangeFilterClients"/>
+        <rangeFilter @rangeFilterClients="rangeFilterClients" @resetFilter="rangeFilterClients"/>
       </div>
       <div class="col-md-6" :class="{'hidden__content': modelType !== 'novoregi'}">
         <div class="col-12 col-md-12 col-sm-12 col-lg-10 col-xl-8">
@@ -167,7 +167,7 @@
   import { mapGetters, mapActions } from 'vuex'
   import Paginate from "vuejs-paginate-next";
   import RangeFilterClients from '@/assets/rangeFilterDiapason.js'
-  import { GetData } from '@/assets/FetchRequest.js'
+  import { GetData, GetDataGte, GetDataLte } from '@/assets/FetchRequest.js'
   import { BodyStore, PaginatonStore } from '@/assets/updateStore.js'
   import { FetchClient, FetchStatistics } from '@/assets/sendEntryesOnServer.js'
 
@@ -223,10 +223,18 @@
           }
         },
         async rangeFilterClients (event) {
-          const RangeFilterClientsInstance = new RangeFilterClients(event, this.$store)
-          RangeFilterClientsInstance.updateStoreTableBody(this.tableBody)
+          let ButtonId = event.target.id
 
-          const GetDataInstance = new GetData(this.clientsPerPageData)
+          if (ButtonId.includes('start')) {
+            localStorage.setItem('reverse', 'None')
+            var GetDataInstance = new GetDataGte(this.clientsPerPageData)
+          } 
+          else if (ButtonId.includes('end')) {
+            localStorage.setItem('reverse', 'True')
+            var GetDataInstance = new GetDataLte(this.clientsPerPageData)
+          } else {
+            var GetDataInstance = new GetData(this.clientsPerPageData)
+          }
           let data = await GetDataInstance.returnSlice()
 
           const BodyStoreInstance = new BodyStore(this.$store, data)
@@ -234,6 +242,9 @@
 
           const PaginatonStoreInstance = new PaginatonStore(this.$store, data)
           PaginatonStoreInstance.update()
+
+          const RangeFilterClientsInstance = new RangeFilterClients(event, this.$store)
+          RangeFilterClientsInstance.updateStoreTableBody(this.tableBody)
         },
         SendOnStatistic (event) {
           // function callback (data) {
