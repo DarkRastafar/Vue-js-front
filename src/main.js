@@ -8,7 +8,6 @@ import { vSelect } from "vue-select";
 import "vue-select/dist/vue-select.css";
 
 
-
 const app = createApp(App);
 app.use(store)
 app.use(router)

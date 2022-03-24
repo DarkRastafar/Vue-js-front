@@ -14,5 +14,11 @@ function setAllButtonFalse (button_class) {
     }
 }
 
+function saveBankToLocalStorage (event) {
+    let buttonId = event.target.id
+    let bankName = buttonId.split(' ')[1].replace('_registry', '')
+    localStorage.setItem('bank', bankName)
+}
 
-export { setButtonsFalse, setAllButtonFalse };
+
+export { setButtonsFalse, setAllButtonFalse, saveBankToLocalStorage };

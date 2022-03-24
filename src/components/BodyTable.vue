@@ -1,5 +1,5 @@
 <template>
-  <bankes/>
+  <bankes @changeBank="changeBank"/>
   <div class="container fluid customData">
     <vNotification :messages="messages"/>
     <div class="row">
@@ -159,8 +159,9 @@
   import Paginate from "vuejs-paginate-next";
   import RangeFilterClients from '@/assets/rangeFilterDiapason.js'
   import { GetData, GetDataGte, GetDataLte } from '@/assets/FetchRequest.js'
-  import { BodyStore, PaginatonStore } from '@/assets/updateStore.js'
+  import { BodyStore, BodyStoreNew, PaginatonStore } from '@/assets/updateStore.js'
   import { FetchClient, FetchStatistics } from '@/assets/sendEntryesOnServer.js'
+  import { MutationBody, MutationHeaders } from '@/assets/mutationResponseData.js'
 
   export default {
       name: 'bodyTable',
@@ -255,6 +256,17 @@
         },
         returnStrippedPhone(phone_str) {
           return phone_str.replace('=', '')
+        },
+        async changeBank (event) {
+          const GetDataInstance = new GetDataGte(this.clientsPerPageData)
+          let data = await GetDataInstance.returnSlice()
+
+          const MutationBodyInstance = new MutationBody(data)
+          let mutationClientsDict = MutationBodyInstance.returnMutationDict()
+
+          const BodyStoreNewInstance = new BodyStoreNew(this.$store, mutationClientsDict)
+          BodyStoreNewInstance.update()
+
         }
       },
       async mounted() {

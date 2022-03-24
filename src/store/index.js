@@ -4,8 +4,9 @@ import SetBankButton from '@/assets/set_bank_button.js'
 import SetClientsModelButton from '@/assets/setClientsModelButton.js'
 import { SetValuesToRangeFilter } from '@/assets/setVariablesToOperator.js'
 import { GetData } from '@/assets/FetchRequest.js'
+import { MutationBody, MutationHeaders } from '@/assets/mutationResponseData.js'
 
-
+const defaultOperatorBank = 'alfabank'
 const defaultClientType = 'novoregi'
 const defaultClientPerPage = 2
 
@@ -41,7 +42,7 @@ export default createStore({
                 localStorage.setItem('username_id', operator_id)
 
                 const InstanceSetBankButton = new SetBankButton()
-                InstanceSetBankButton.setButtonStatus(messageCatch)
+                InstanceSetBankButton.setButtonStatusFromLocalStorage(defaultOperatorBank)
 
                 const InstanceSetClientsModelButton = new SetClientsModelButton()
                 InstanceSetClientsModelButton.setButtonStatus(class_model)
@@ -122,8 +123,17 @@ export default createStore({
     async getDataDRF(ctx) {
         const GetDataInstance = new GetData(defaultClientPerPage)
         let responseData = await GetDataInstance.returnSlice()
+
+        const MutationBodyInstance = new MutationBody(responseData)
+        let mutationClientsDict = MutationBodyInstance.returnMutationDict()
+
+        const MutationHeadersInstance = new MutationHeaders(responseData)
+        let mutationHeadersDict = MutationHeadersInstance.returnMutationDict()
+
+
+
         let paginateData = responseData.data.body.paginate_data
-        let responseBody = responseData.data.body.body
+        let responseBody = mutationClientsDict
         let responseHeaders = responseData.data.headers
         let responseAdditionalComments = responseData.data.additional_comments
         let responseClientsTypeForOperators = responseData.data.clients_type_for_operators

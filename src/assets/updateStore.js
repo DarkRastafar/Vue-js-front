@@ -13,6 +13,18 @@ class BodyStore {
 }
 
 
+class BodyStoreNew {
+    constructor(store, data) {
+        this.store = store;
+        this.data = data;
+    }
+
+    update () {
+        this.store.commit('updateTableBody', this.data)
+    }
+}
+
+
 class PaginatonStore {
     constructor(store, data) {
         this.store = store;
@@ -25,4 +37,4 @@ class PaginatonStore {
     }
 }
 
-export { BodyStore, PaginatonStore };
+export { BodyStore, BodyStoreNew, PaginatonStore };

@@ -37,10 +37,7 @@
             <input type="checkbox" class="btn-check header-button" id="btn-check-outlined module_registry" autocomplete="off" @click="setUpCheckboxes">
             <label class="btn btn-outline-primary" for="btn-check-outlined module_registry">Модуль</label><br>
           </div>
-
           <!-- <statusOperator/> -->
-          
-          
         </div>
       </div>
       <clientType/>
@@ -52,10 +49,10 @@
 <script>
   import statusOperator from '@/components/statusOperator.vue'
   import clientType from '@/components/clientType.vue'
-  import { SetBankToOperator } from '@/assets/setVariablesToOperator.js'
-  import { setButtonsFalse } from '@/assets/setButton.js'
+  import { setButtonsFalse, saveBankToLocalStorage } from '@/assets/setButton.js'
 
   export default{
+    emits: ['changeBank'],
     data(){
       return{
         Bankes: [
@@ -74,11 +71,12 @@
     },
     methods: {
       setUpCheckboxes (event) {
-        const InstanceSetBankToOperator = new SetBankToOperator(event)
-        InstanceSetBankToOperator.isCheckButton()
+        saveBankToLocalStorage(event)
 
         var button_class = "btn-check header-button"
         setButtonsFalse(event, button_class)
+
+        this.$emit('changeBank', event)
       },
     }
   }
