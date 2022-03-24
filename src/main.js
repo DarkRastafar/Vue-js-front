@@ -10,10 +10,8 @@ import "vue-select/dist/vue-select.css";
 
 
 const app = createApp(App);
-// app.use(vSelect)
 app.use(store)
 app.use(router)
-// app.use(Paginate)
 app.mount('#app')
 
 Vue.use(Paginate)
