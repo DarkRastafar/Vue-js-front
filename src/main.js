@@ -8,7 +8,6 @@ import "@/assets/css/table.css"
 import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
 
-import SetWorkStatus from '@/assets/set_work_status.js'
 import SetBankButton from '@/assets/set_bank_button.js'
 import SetClientsModelButton from '@/assets/setClientsModelButton.js'
 import { SetValuesToRangeFilter } from '@/assets/setVariablesToOperator.js'
@@ -49,9 +48,6 @@ const store = createStore({
                     document.cookie = `username_id=${operator_id}; secure`
                     localStorage.setItem('username_id', operator_id)
 
-                    // const InstanceSetWorkStatus = new SetWorkStatus(messageCatch)
-                    // InstanceSetWorkStatus.setStatus()
-
                     const InstanceSetBankButton = new SetBankButton()
                     InstanceSetBankButton.setButtonStatus(messageCatch)
 
@@ -63,6 +59,7 @@ const store = createStore({
                 }
                 else if (eventName == 'send_non_called_statistics') {
                     const statisticsDataMessage = JSON.parse(messageCatch.message).statistics
+                    console.log(statisticsDataMessage)
                     ctx.commit('updateStatisticsData', statisticsDataMessage)
                 }
                 else if (eventName == 'client_mutation') {

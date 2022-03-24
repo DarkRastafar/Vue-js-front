@@ -10,17 +10,8 @@
         <div class="col-12 col-md-12 col-sm-12 col-lg-10 col-xl-8">
           <div class="data_non_called_clients">
             <ul class="list-group">
-              <li class="list-group-item d-flex justify-content-between align-items-center">Альфабанк:
-                <span class="badge badge-primary badge-pill statisticsDataSpan">{{ statisticsData.alfabank_data_json }}</span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center">ВтБ:
-                <span class="badge badge-primary badge-pill statisticsDataSpan">{{ statisticsData.vtb_data_json }}</span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center">Открытие:
-                <span class="badge badge-primary badge-pill statisticsDataSpan">{{ statisticsData.otkritie_data_json }}</span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center">Точка:
-                <span class="badge badge-primary badge-pill statisticsDataSpan">{{ statisticsData.tochka_data_json }}</span>
+              <li class="list-group-item d-flex justify-content-between align-items-center" v-for="bank in statisticsData" :key="bank.key">{{bank.key}}:
+                <span class="badge badge-primary badge-pill statisticsDataSpan">{{ bank.value }}</span>
               </li>
             </ul>
           </div>
