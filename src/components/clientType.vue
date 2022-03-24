@@ -1,17 +1,21 @@
 <template>
-  <div class="col-md-auto">
-    <input type="checkbox" class="btn-check header-button-client" id="btn-check-outlined utro_model" autocomplete="off" @click="setUpCheckboxes">
-    <label class="btn btn-outline-danger" for="btn-check-outlined utro_model">Утро</label><br>
-  </div>
+  <div class="container">
+    <div class="row" id="client_model_row">
+      <div class="col-md-auto">
+        <input type="checkbox" class="btn-check header-button-client" id="btn-check-outlined utro_model" autocomplete="off" @click="setUpCheckboxes">
+        <label class="btn btn-outline-danger" for="btn-check-outlined utro_model">Утро</label><br>
+      </div>
 
-  <div class="col-md-auto">
-    <input type="checkbox" class="btn-check header-button-client" id="btn-check-outlined novoregi_model" autocomplete="off" @click="setUpCheckboxes">
-    <label class="btn btn-outline-primary" for="btn-check-outlined novoregi_model">Новореги</label><br>
-  </div>
+      <div class="col-md-auto">
+        <input type="checkbox" class="btn-check header-button-client" id="btn-check-outlined novoregi_model" autocomplete="off" @click="setUpCheckboxes">
+        <label class="btn btn-outline-primary" for="btn-check-outlined novoregi_model">Новореги</label><br>
+      </div>
 
-  <div class="col-md-auto">
-    <input type="checkbox" class="btn-check header-button-client" id="btn-check-outlined obed_model" autocomplete="off" @click="setUpCheckboxes">
-    <label class="btn btn-outline-info" for="btn-check-outlined obed_model">Обед</label><br>
+      <div class="col-md-auto">
+        <input type="checkbox" class="btn-check header-button-client" id="btn-check-outlined obed_model" autocomplete="off" @click="setUpCheckboxes">
+        <label class="btn btn-outline-info" for="btn-check-outlined obed_model">Обед</label><br>
+      </div>
+    </div>
   </div>
 </template>
 

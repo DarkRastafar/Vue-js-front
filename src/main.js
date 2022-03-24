@@ -49,8 +49,8 @@ const store = createStore({
                     document.cookie = `username_id=${operator_id}; secure`
                     localStorage.setItem('username_id', operator_id)
 
-                    const InstanceSetWorkStatus = new SetWorkStatus(messageCatch)
-                    InstanceSetWorkStatus.setStatus()
+                    // const InstanceSetWorkStatus = new SetWorkStatus(messageCatch)
+                    // InstanceSetWorkStatus.setStatus()
 
                     const InstanceSetBankButton = new SetBankButton()
                     InstanceSetBankButton.setButtonStatus(messageCatch)

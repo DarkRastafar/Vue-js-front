@@ -233,6 +233,7 @@
             localStorage.setItem('reverse', 'True')
             var GetDataInstance = new GetDataLte(this.clientsPerPageData)
           } else {
+            localStorage.setItem('reverse', 'None')
             var GetDataInstance = new GetData(this.clientsPerPageData)
           }
           let data = await GetDataInstance.returnSlice()

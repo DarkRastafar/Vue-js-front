@@ -38,12 +38,14 @@
             <label class="btn btn-outline-primary" for="btn-check-outlined module_registry">Модуль</label><br>
           </div>
 
-          <statusOperator/>
-          <clientType/>
+          <!-- <statusOperator/> -->
+          
           
         </div>
       </div>
+      <clientType/>
     </div>
+
 </template>
 
 
