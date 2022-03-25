@@ -262,7 +262,6 @@
           callback(FetchStatisticsInstance.send())
         },
         returnStrippedPhone(phone_str) {
-          console.log(phone_str)
           return phone_str.replace('=', '')
         },
         async changeBank (event) {

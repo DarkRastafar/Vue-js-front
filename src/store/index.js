@@ -4,7 +4,7 @@ import SetBankButton from '@/assets/set_bank_button.js'
 import SetClientsModelButton from '@/assets/setClientsModelButton.js'
 import { SetValuesToRangeFilter } from '@/assets/setVariablesToOperator.js'
 import { GetData } from '@/assets/FetchRequest.js'
-import { MutationBody, MutationHeaders } from '@/assets/mutationResponseData.js'
+import { MutationResponseData, MutationBody, MutationHeaders } from '@/assets/mutationResponseData.js'
 
 const defaultOperatorBank = 'alfabank'
 const defaultClientType = 'novoregi'
@@ -61,12 +61,16 @@ export default createStore({
                 for (let client of currentArray) {
                     if (client.id == mutationClientID) {
                         let indexItem = currentArray.findIndex(i => i == client)
-                        ctx.commit('replaceItemIntoArray', [indexItem, mutationClient])
+                        const MutationResponseDataInstance = new MutationResponseData(mutationClient)
+                        let mutationEntry = MutationResponseDataInstance.returnEntry(mutationClient)
+                        
+                        ctx.commit('replaceItemIntoArray', [indexItem, mutationEntry])
                     }
                 }
             }
             else if (eventName == 'headers_mutation') {
                 let responseHeaders = JSON.parse(messageCatch.message)
+                console.log('headers_mutation')
                 ctx.commit('updateFirstTableHeaders', responseHeaders.first)
                 ctx.commit('updateSecondTableHeaders', responseHeaders.second)
                 ctx.commit('updateThirdTableHeaders', responseHeaders.third)

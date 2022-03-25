@@ -11,8 +11,10 @@ class MutationResponseData {
         return localStorage.getItem('bank')
     }
 
-    returnEntry (entry, bank_name, metaFieldsArray) {
+    returnEntry (entry) {
         let mutationEntry = {}
+        let bank_name = checkAlfabank(this.getBank())
+        let metaFieldsArray = returnColFields(bank_name)
 
         for (const [key, value] of Object.entries(entry)) {
             if (metaFieldsArray.includes(key)) {
@@ -41,12 +43,10 @@ class MutationBody extends MutationResponseData {
     }
 
     returnMutationDict () {
-        let bank_name = checkAlfabank(this.getBank())
-        let metaFieldsArray = returnColFields(bank_name)
         let resultClientsList = []
 
         for (let client of this.bodyData) {
-            let mutationClient = this.returnEntry(client, bank_name, metaFieldsArray)
+            let mutationClient = this.returnEntry(client)
             resultClientsList.push(mutationClient)
         }
         return resultClientsList
