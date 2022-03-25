@@ -115,6 +115,7 @@
                 <!-- <textarea :value="Client.phone" name="patronomic"/> -->
                 <!-- <textarea :value="returnStrippedPhone(Client.phone)" name="patronomic" :id="`phone ${Client.id}`"/> -->
                 <a :href="`tel:${returnStrippedPhone(Client.phone)}`" :id="`phone ${Client.id}`">{{returnStrippedPhone(Client.phone)}}</a>
+                <!-- <a :href="`tel:${Client.phone}`" :id="`phone ${Client.id}`">{{Client.phone}}</a> -->
               </th>
               
             </tr>
@@ -159,7 +160,7 @@
   import Paginate from "vuejs-paginate-next";
   import RangeFilterClients from '@/assets/rangeFilterDiapason.js'
   import { GetData, GetDataGte, GetDataLte } from '@/assets/FetchRequest.js'
-  import { BodyStore, BodyStoreNew, PaginatonStore } from '@/assets/updateStore.js'
+  import { BodyStore, HeadersStore, PaginatonStore } from '@/assets/updateStore.js'
   import { FetchClient, FetchStatistics } from '@/assets/sendEntryesOnServer.js'
   import { MutationBody, MutationHeaders } from '@/assets/mutationResponseData.js'
 
@@ -207,8 +208,11 @@
             const GetDataInstance = new GetData(this.clientsPerPageData)
             let data = await GetDataInstance.returnSlice()
 
-            const BodyStoreInstance = new BodyStore(this.$store, data)
-            BodyStoreInstance.update()
+            const MutationBodyInstance = new MutationBody(data)
+            let mutationClientsDict = MutationBodyInstance.returnMutationDict()
+
+            const BodyStoreInstance = new BodyStore(mutationClientsDict)
+            BodyStoreInstance.update(this.$store)
 
             const PaginatonStoreInstance = new PaginatonStore(this.$store, data)
             PaginatonStoreInstance.update()
@@ -230,8 +234,11 @@
           }
           let data = await GetDataInstance.returnSlice()
 
-          const BodyStoreInstance = new BodyStore(this.$store, data)
-          BodyStoreInstance.update()
+          const MutationBodyInstance = new MutationBody(data)
+          let mutationClientsDict = MutationBodyInstance.returnMutationDict()
+
+          const BodyStoreInstance = new BodyStore(mutationClientsDict)
+          BodyStoreInstance.update(this.$store)
 
           const PaginatonStoreInstance = new PaginatonStore(this.$store, data)
           PaginatonStoreInstance.update()
@@ -255,17 +262,25 @@
           callback(FetchStatisticsInstance.send())
         },
         returnStrippedPhone(phone_str) {
+          console.log(phone_str)
           return phone_str.replace('=', '')
         },
         async changeBank (event) {
+
           const GetDataInstance = new GetDataGte(this.clientsPerPageData)
           let data = await GetDataInstance.returnSlice()
 
           const MutationBodyInstance = new MutationBody(data)
           let mutationClientsDict = MutationBodyInstance.returnMutationDict()
 
-          const BodyStoreNewInstance = new BodyStoreNew(this.$store, mutationClientsDict)
-          BodyStoreNewInstance.update()
+          const MutationHeadersInstance = new MutationHeaders(data)
+          let mutationHeadersDict = MutationHeadersInstance.returnMutationDict()
+
+          const BodyStoreInstance = new BodyStore(mutationClientsDict)
+          BodyStoreInstance.update(this.$store)
+
+          const HeadersStoreInstance = new HeadersStore(mutationHeadersDict)
+          HeadersStoreInstance.update(this.$store)
 
         }
       },

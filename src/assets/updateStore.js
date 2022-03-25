@@ -1,26 +1,25 @@
 
 
 class BodyStore {
-    constructor(store, data) {
-        this.store = store;
+    constructor(data) {
         this.data = data;
     }
 
-    update () {
-        let bodyData = this.data.data.body.body
-        this.store.commit('updateTableBody', bodyData)
+    update (store) {
+        store.commit('updateTableBody', this.data)
     }
 }
 
 
-class BodyStoreNew {
-    constructor(store, data) {
-        this.store = store;
+class HeadersStore {
+    constructor(data) {
         this.data = data;
     }
 
-    update () {
-        this.store.commit('updateTableBody', this.data)
+    update (store) {
+        store.commit('updateFirstTableHeaders', this.data.first)
+        store.commit('updateSecondTableHeaders', this.data.second)
+        store.commit('updateThirdTableHeaders', this.data.third)
     }
 }
 
@@ -37,4 +36,4 @@ class PaginatonStore {
     }
 }
 
-export { BodyStore, BodyStoreNew, PaginatonStore };
+export { BodyStore, HeadersStore, PaginatonStore };

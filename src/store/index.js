@@ -130,11 +130,13 @@ export default createStore({
         const MutationHeadersInstance = new MutationHeaders(responseData)
         let mutationHeadersDict = MutationHeadersInstance.returnMutationDict()
 
+        console.log(mutationHeadersDict)
+
 
 
         let paginateData = responseData.data.body.paginate_data
         let responseBody = mutationClientsDict
-        let responseHeaders = responseData.data.headers
+        let responseHeaders = mutationHeadersDict
         let responseAdditionalComments = responseData.data.additional_comments
         let responseClientsTypeForOperators = responseData.data.clients_type_for_operators
         
